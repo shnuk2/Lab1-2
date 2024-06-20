@@ -20,36 +20,20 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest pytest-html flake8-html
+        pip install pytest pytest-html
 
     - name: Run tests and generate HTML reports
       run: |
         mkdir -p test_reports
         pytest --html=test_reports/test_report.html --self-contained-html
 
-    - name: Create ZIP archive of test reports
-      run: |
-        zip -r test_reports.zip test_reports
-
-    - name: Run Flake8 and generate HTML reports
-      continue-on-error: true
-      run: |
-        mkdir -p flake8_report
-        flake8 ./game --format=html --htmldir=flake8_report || echo "Flake8 found issues"
-
     - name: List generated report files
       run: |
-        echo "Listing Flake8 report files:"
-        ls -l flake8_report
+        echo "Listing test report files:"
+        ls -l test_reports
 
-    - name: Upload test reports ZIP
+    - name: Upload test reports
       uses: actions/upload-artifact@v2
       with:
-        name: test-reports-zip
-        path: test_reports.zip
-
-    - name: Upload lint report
-      uses: actions/upload-artifact@v2
-      with:
-        name: lint-report
-        path: flake8_report/index.html
+        name: test-reports
+        path: test_reports/test_report.html
