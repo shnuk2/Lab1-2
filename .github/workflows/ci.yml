@@ -24,3 +24,18 @@ jobs:
     - name: Run tests
       run: |
         python -m unittest discover -s tests
+
+        - name: Run Flake8
+      continue-on-error: true
+      run: |
+        flake8 ./game --format=html --htmldir=flake8_report
+    - name: Upload test reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-reports
+        path: test_report_*.html
+    - name: Upload lint report
+      uses: actions/upload-artifact@v2
+      with:
+        name: lint-report
+        path: flake8_report/
