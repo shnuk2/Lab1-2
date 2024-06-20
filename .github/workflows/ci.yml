@@ -39,6 +39,11 @@ jobs:
         echo "Listing Flake8 report files:"
         ls -l flake8_report
 
+    - name: Debug Flake8 report files
+      run: |
+        echo "Listing Flake8 report files:"
+        ls -l flake8_report
+
     - name: Create ZIP archive of Flake8 report
       if: success() && steps.flake8_report.outputs.files-created == 'true'
       run: |
