@@ -21,6 +21,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Check Flake8 installation
+      run: |
+        flake8 --version
+
     - name: Run tests and generate HTML reports
       run: |
         mkdir -p test_reports
@@ -30,17 +34,12 @@ jobs:
       continue-on-error: true
       run: |
         mkdir -p flake8_report
-        flake8 ./game --format=html --htmldir=flake8_report || echo "Flake8 found issues"
+        python -m flake8 ./game --format=html --htmldir=flake8_report || echo "Flake8 found issues"
 
     - name: List generated report files
       run: |
         echo "Listing test report files:"
         ls -l test_reports
-        echo "Listing Flake8 report files:"
-        ls -l flake8_report
-
-    - name: Debug Flake8 report files
-      run: |
         echo "Listing Flake8 report files:"
         ls -l flake8_report
 
