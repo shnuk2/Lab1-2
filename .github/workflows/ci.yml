@@ -25,10 +25,18 @@ jobs:
       run: |
         python -m unittest discover -s tests
 
+    - name: Create Flake8 report directory
+      run: mkdir -p flake8_report
+
     - name: Run Flake8
       continue-on-error: true
       run: |
         flake8 ./game --format=html --htmldir=flake8_report || echo "Flake8 found issues"
+
+    - name: List Flake8 report files
+      run: |
+        echo "Listing Flake8 report files:"
+        ls -l flake8_report
 
     - name: Upload test reports
       uses: actions/upload-artifact@v2
@@ -41,9 +49,3 @@ jobs:
       with:
         name: lint-report
         path: flake8_report/
-
-    - name: Display logs
-      if: failure()
-      run: |
-        echo "Linting errors or warnings:"
-        cat flake8_report/*.html || true
