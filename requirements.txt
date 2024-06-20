@@ -1,5 +1,4 @@
-flake8==7.0.0
-pygame==2.5.2
-pygame-ce==2.4.0
-pytest==8.1.1
-pytest-mock==3.14.0
+pytest
+pytest-html
+flake8
+flake8-html
